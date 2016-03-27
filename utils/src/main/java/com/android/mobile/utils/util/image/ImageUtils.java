@@ -1,11 +1,18 @@
-package com.android.mobile.utils.util;
+package com.android.mobile.utils.util.image;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -89,6 +96,13 @@ public class ImageUtils {
     }
 
     /**
+     * 把bitmap转换成Base64编码String
+     */
+    public static String bitmapToString(Bitmap bitmap) {
+        return Base64.encodeToString(bitmapToByte(bitmap), Base64.DEFAULT);
+    }
+
+    /**
      * scale image
      * @param org
      * @param scaleWidth
@@ -103,5 +117,30 @@ public class ImageUtils {
         Matrix matrix = new Matrix();
         matrix.postScale(scaleWidth, scaleHeight);
         return Bitmap.createBitmap(org, 0, 0, org.getWidth(), org.getHeight(), matrix, true);
+    }
+
+    /**
+     * 获得圆角Bitmap
+     * @param bitmap
+     * @return
+     */
+    public static Bitmap toRoundCorner(Bitmap bitmap) {
+        int height = bitmap.getHeight();
+        int width = bitmap.getHeight();
+        Bitmap output = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(output);
+
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, width, height);
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        //paint.setColor(0xff424242);
+        paint.setColor(Color.TRANSPARENT);
+        canvas.drawCircle(width / 2, height / 2, width / 2, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        return output;
     }
 }

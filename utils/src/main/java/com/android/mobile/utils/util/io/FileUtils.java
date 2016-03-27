@@ -1,6 +1,8 @@
-package com.android.mobile.utils.util;
+package com.android.mobile.utils.util.io;
 
 import android.text.TextUtils;
+
+import com.android.mobile.utils.util.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,6 +14,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.nio.channels.FileChannel;
+import java.text.DecimalFormat;
 
 /**
  * Created by xinming.xxm on 2016/3/27.
@@ -239,6 +243,68 @@ public class FileUtils {
 
         File dire = new File(directoryPath);
         return (dire.exists() && dire.isDirectory());
+    }
+
+    /**
+     * 通过通道copy
+     * @param s
+     * @param t
+     */
+    public static void copyFileByChannel(File s, File t) {
+        FileInputStream fi = null;
+        FileOutputStream fo = null;
+        try {
+            fi = new FileInputStream(s);
+            fo = new FileOutputStream(t);
+            FileChannel in = fi.getChannel();//得到对应的文件通道
+            FileChannel out = fo.getChannel();//得到对应的文件通道
+            in.transferTo(0, in.size(), out);//连接两个通道，并且从in通道读取，然后写入out通道
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fo != null) fo.close();
+                if (fi != null) fi.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    /**
+     * 文件大小格式化
+     * @param fileLen
+     * @return
+     */
+    public static String formatFileSizeToString(long fileLen) {// 转换文件大小
+        DecimalFormat df = new DecimalFormat("#.00");
+        String fileSizeString = "";
+        if (fileLen < 1024) {
+            fileSizeString = df.format((double) fileLen) + "B";
+        } else if (fileLen < 1048576) {
+            fileSizeString = df.format((double) fileLen / 1024) + "K";
+        } else if (fileLen < 1073741824) {
+            fileSizeString = df.format((double) fileLen / 1048576) + "M";
+        } else {
+            fileSizeString = df.format((double) fileLen / 1073741824) + "G";
+        }
+        return fileSizeString;
+    }
+
+    /***
+     * 获取文件扩展名
+     * @param filename
+     * @return 返回文件扩展名
+     */
+    public static String getExtensionName(String filename) {
+        if ((filename != null) && (filename.length() > 0)) {
+            int dot = filename.lastIndexOf('.');
+            if ((dot >-1) && (dot < (filename.length() - 1))) {
+                return filename.substring(dot + 1);
+            }
+        }
+        return filename;
     }
 
 }

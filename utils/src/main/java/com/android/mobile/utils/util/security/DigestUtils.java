@@ -1,4 +1,4 @@
-package com.android.mobile.utils.util;
+package com.android.mobile.utils.util.security;
 
 import java.security.MessageDigest;
 
