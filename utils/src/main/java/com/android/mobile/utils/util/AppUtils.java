@@ -3,6 +3,9 @@ package com.android.mobile.utils.util;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 
 import java.util.List;
 
@@ -58,5 +61,37 @@ public class AppUtils {
             }
         }
         return false;
+    }
+
+    /**
+     * 调用当前系统所有分享渠道
+     * @param context
+     * @param title
+     * @param content
+     * @param dialogTitle
+     */
+    public static void shareToOtherApp(Context context,String title,String content, String dialogTitle ) {
+        Intent intentItem = new Intent(Intent.ACTION_SEND);
+        intentItem.setType("text/plain");
+        intentItem.putExtra(Intent.EXTRA_SUBJECT, title);
+        intentItem.putExtra(Intent.EXTRA_TEXT, content);
+        intentItem.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(Intent.createChooser(intentItem, dialogTitle));
+    }
+
+    /**
+     * 获取app包信息版本等信息
+     * @param context
+     * @return
+     */
+    public PackageInfo getPackageInfo(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        PackageInfo packageInfo = null;
+        try {
+            packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return packageInfo;
     }
 }
