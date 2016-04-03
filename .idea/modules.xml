@@ -3,7 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dialog/dialog.iml" filepath="$PROJECT_DIR$/dialog/dialog.iml" />
+      <module fileurl="file://$PROJECT_DIR$/edittext/edittext.iml" filepath="$PROJECT_DIR$/edittext/edittext.iml" />
       <module fileurl="file://$PROJECT_DIR$/moiblecommon.iml" filepath="$PROJECT_DIR$/moiblecommon.iml" />
+      <module fileurl="file://$PROJECT_DIR$/toast/toast.iml" filepath="$PROJECT_DIR$/toast/toast.iml" />
       <module fileurl="file://$PROJECT_DIR$/ui/ui.iml" filepath="$PROJECT_DIR$/ui/ui.iml" />
       <module fileurl="file://$PROJECT_DIR$/utils/utils.iml" filepath="$PROJECT_DIR$/utils/utils.iml" />
     </modules>

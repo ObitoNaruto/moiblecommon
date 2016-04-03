@@ -14,7 +14,6 @@ import java.util.List;
  */
 public class AppUtils {
     /**
-     * 判断当前运行的进程中是否有以processName命名的
      * @param context
      * @param processName
      * @return
@@ -45,7 +44,6 @@ public class AppUtils {
     }
 
     /**
-     * 判断当前应用是否在后台
      * need use permission android.permission.GET_TASKS in Manifest.xml
      * @param context
      * @return
@@ -64,7 +62,6 @@ public class AppUtils {
     }
 
     /**
-     * 调用当前系统所有分享渠道
      * @param context
      * @param title
      * @param content
@@ -80,7 +77,7 @@ public class AppUtils {
     }
 
     /**
-     * 获取app包信息版本等信息
+     * 锟斤拷取app锟斤拷锟斤拷息锟芥本锟斤拷锟斤拷息
      * @param context
      * @return
      */

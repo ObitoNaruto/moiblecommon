@@ -12,7 +12,7 @@ import android.os.Build;
  */
 public class AlarmUtils {
     /**
-     * ¿ªÆô¶¨Ê±Æ÷
+     * å¼€å¯å®šæ—¶å™¨
      */
     @TargetApi(Build.VERSION_CODES.CUPCAKE)
     public static void startAlarmIntent(Context context, int triggerAtMillis, PendingIntent pendingIntent) {
@@ -21,7 +21,7 @@ public class AlarmUtils {
     }
 
     /**
-     * ¹Ø±Õ¶¨Ê±Æ÷
+     * å…³é—­å®šæ—¶å™¨
      */
     @TargetApi(Build.VERSION_CODES.CUPCAKE)
     public static void stopAlarmIntent(Context context, PendingIntent pendingIntent) {
@@ -30,7 +30,7 @@ public class AlarmUtils {
     }
 
     /**
-     * ¿ªÆôÂÖÑ¯·şÎñ
+     * å¼€å¯è½®è¯¢æœåŠ¡
      */
     @TargetApi(Build.VERSION_CODES.CUPCAKE)
     public static void startAlarmService(Context context, int triggerAtMillis, Class<?> cls, String action) {
@@ -40,7 +40,7 @@ public class AlarmUtils {
         startAlarmIntent(context, triggerAtMillis, pendingIntent);
     }
     /**
-     * Í£Ö¹ÆôÂÖÑ¯·şÎñ
+     * åœæ­¢å¯è½®è¯¢æœåŠ¡
      */
     @TargetApi(Build.VERSION_CODES.CUPCAKE)
     public static void stopAlarmService(Context context, Class<?> cls, String action) {
