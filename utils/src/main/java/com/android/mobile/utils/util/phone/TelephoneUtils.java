@@ -1,6 +1,8 @@
-package com.android.mobile.utils.util;
+package com.android.mobile.utils.util.phone;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.telephony.TelephonyManager;
 
 import java.text.SimpleDateFormat;
@@ -81,5 +83,18 @@ public class TelephoneUtils {
         sb.append("\nVoiceMailNumber      :").append(tm.getVoiceMailNumber());
 
         return sb.toString();
+    }
+
+    /**
+     * µç»°²¦ºÅÆ÷
+     * @param number
+     * need permission:<uses-permission android:name="android.permission.CALL_PHONE"/>
+     */
+    public static void callPhone(Context context, String number){
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_CALL);
+        intent.setData(Uri.parse("tel:" + number));
+        context.startActivity(intent);
+
     }
 }
