@@ -1,1 +1,1 @@
-include ':app', ':ui', ':utils', ':dialog', ':toast', ':edittext'
+include ':app', ':ui', ':utils', ':dialog', ':toast', ':edittext', ':mywealth', ':mywealth', ':'

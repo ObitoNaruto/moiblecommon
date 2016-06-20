@@ -25,8 +25,26 @@ public class SdCardUtils {
      * is sd card available.
      * @return true if available
      */
-    public boolean isSdCardAvailable() {
+    public static boolean isSdCardAvailable() {
         return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+    }
+
+    /**
+     * Check if the file is exists
+     *
+     * @param filePath 文件路径
+     * @param fileName 文件名
+     * @return 是否存在文件
+     */
+    public static boolean isFileExistsInSDCard(String filePath, String fileName) {
+        boolean flag = false;
+        if (isSdCardAvailable()) {
+            File file = new File(filePath, fileName);
+            if (file.exists()) {
+                flag = true;
+            }
+        }
+        return flag;
     }
 
     /**

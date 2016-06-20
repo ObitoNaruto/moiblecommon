@@ -1,9 +1,11 @@
 package com.android.mobile.utils.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.inputmethod.InputMethodManager;
 
 /**
  * Created by xinming.xxm on 2016/3/27.
@@ -102,5 +104,62 @@ public class DisplayUtils {
             sb.append("\nxdpi            :").append(dm.xdpi);
             sb.append("\nydpi            :").append(dm.ydpi);
         return dm;
+    }
+
+    /**
+     * 获取dialog宽度
+     *
+     * @param activity Activity
+     * @return Dialog宽度
+     */
+    public static int getDialogW(Activity activity) {
+        DisplayMetrics dm = new DisplayMetrics();
+        dm = activity.getResources().getDisplayMetrics();
+        int w = dm.widthPixels - 100;
+        // int w = aty.getWindowManager().getDefaultDisplay().getWidth() - 100;
+        return w;
+    }
+
+    /**
+     * 获取屏幕宽度
+     *
+     * @param activity Activity
+     * @return 屏幕宽度
+     */
+    public static int getScreenW(Activity activity) {
+        DisplayMetrics dm = new DisplayMetrics();
+        dm = activity.getResources().getDisplayMetrics();
+        int w = dm.widthPixels;
+        // int w = aty.getWindowManager().getDefaultDisplay().getWidth();
+        return w;
+    }
+
+    /**
+     * 获取屏幕高度
+     *
+     * @param activity Activity
+     * @return 屏幕高度
+     */
+    public static int getScreenH(Activity activity) {
+        DisplayMetrics dm = new DisplayMetrics();
+        dm = activity.getResources().getDisplayMetrics();
+        int h = dm.heightPixels;
+        // int h = aty.getWindowManager().getDefaultDisplay().getHeight();
+        return h;
+    }
+
+    /**
+     * Toggle keyboard If the keyboard is visible,then hidden it,if it's
+     * invisible,then show it
+     *
+     * @param context 上下文
+     */
+    public static void toggleKeyboard(Context context) {
+        InputMethodManager imm = (InputMethodManager) context
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm.isActive()) {
+            imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT,
+                    InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 }

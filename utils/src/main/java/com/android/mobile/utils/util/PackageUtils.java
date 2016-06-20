@@ -11,6 +11,7 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import java.io.File;
@@ -21,48 +22,7 @@ import java.util.Map;
  * Created by xinming.xxm on 2016/3/27.
  */
 public class PackageUtils {
-    /**
-     * 调用系统安装应用
-     */
-    public static boolean install(Context context, File file) {
-        if (file == null || !file.exists() || !file.isFile()) {
-            return false;
-        }
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-        return true;
-    }
 
-    /**
-     * 调用系统卸载应用
-     */
-    public static void uninstallApk(Context context, String packageName) {
-        Intent intent = new Intent(Intent.ACTION_DELETE);
-        Uri packageURI = Uri.parse("package:" + packageName);
-        intent.setData(packageURI);
-        context.startActivity(intent);
-    }
-
-    /**
-     * 打开已安装应用的详情
-     */
-    public static void goToInstalledAppDetails(Context context, String packageName) {
-        Intent intent = new Intent();
-        int sdkVersion = Build.VERSION.SDK_INT;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
-            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-            intent.setData(Uri.fromParts("package", packageName, null));
-        } else {
-            intent.setAction(Intent.ACTION_VIEW);
-            intent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails");
-            intent.putExtra((sdkVersion == Build.VERSION_CODES.FROYO ? "pkg"
-                    : "com.android.settings.ApplicationPkgName"), packageName);
-        }
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-    }
 
     /**
      * 获取指定程序信息
@@ -230,5 +190,31 @@ public class PackageUtils {
                     Toast.LENGTH_LONG).show();
         }
         return false;
+    }
+
+    /**
+     *判断当前app是否在栈顶
+     * @param context
+     * @param packageName
+     * @return
+     */
+    public static Boolean isTopActivity(Context context, String packageName) {
+        if (context == null || TextUtils.isEmpty(packageName)) {
+            return null;
+        }
+
+        ActivityManager activityManager = (ActivityManager) context
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> tasksInfo = activityManager.getRunningTasks(1);
+        if (tasksInfo == null || tasksInfo.size() < 1) {
+            return null;
+        }
+        try {
+            return packageName.equals(tasksInfo.get(0).topActivity
+                    .getPackageName());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

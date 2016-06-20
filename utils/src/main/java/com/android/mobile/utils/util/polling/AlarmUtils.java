@@ -1,4 +1,4 @@
-package com.android.mobile.utils.util;
+package com.android.mobile.utils.util.polling;
 
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
