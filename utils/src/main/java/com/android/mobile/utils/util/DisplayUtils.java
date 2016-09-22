@@ -11,19 +11,30 @@ import android.view.inputmethod.InputMethodManager;
  * Created by xinming.xxm on 2016/3/27.
  */
 public class DisplayUtils {
+
     /**
-     * ½«pxÖµ×ª»»³ÉÎªdip»òÕßdpÖµ£¬±£Ö¤³ß´ç´óĞ¡²»±ä
+     * è·å–å½“å‰æ‰‹æœºå±å¹•å¯†åº¦
+     * @param context
+     * @return
+     */
+    public static float getDensity(Context context){
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        float density = metrics.density;
+        return density;
+    }
+    /**
+     * pxè½¬æ¢ä¸ºdp
      * @param context
      * @param pxValue
      * @return
      */
-    public static float pxTodip(Context context, float pxValue){
+    public static float pxTodp(Context context, float pxValue){
         final float scale = context.getResources().getDisplayMetrics().density;
         return (pxValue /scale + 0.5f);
     }
 
     /**
-     * ½«dip»òÕßdpÖµ×ª»»³ÉpxÖµ£¬±£Ö¤³ß´ç´óĞ¡²»±ä
+     * ï¿½ï¿½dipï¿½ï¿½ï¿½ï¿½dpÖµ×ªï¿½ï¿½ï¿½ï¿½pxÖµï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ß´ï¿½ï¿½Ğ¡ï¿½ï¿½ï¿½ï¿½
      * @param context
      * @param dipVlaue
      * @return
@@ -34,7 +45,7 @@ public class DisplayUtils {
     }
 
     /**
-     * ½«dip»òÕßdpÖµ×ª»»³ÉpxÖµ,ÖØÔØ·½·¨
+     * ï¿½ï¿½dipï¿½ï¿½ï¿½ï¿½dpÖµ×ªï¿½ï¿½ï¿½ï¿½pxÖµ,ï¿½ï¿½ï¿½Ø·ï¿½ï¿½ï¿½
      * @param context
      * @param dipVlaue
      * @return
@@ -47,7 +58,7 @@ public class DisplayUtils {
     }
 
     /**
-     * ½«pxÖµ×ª»»³ÉspÖµ
+     * ï¿½ï¿½pxÖµ×ªï¿½ï¿½ï¿½ï¿½spÖµ
      * @param context
      * @param pxVlaue
      * @return
@@ -58,7 +69,7 @@ public class DisplayUtils {
     }
 
     /**
-     * ½«spÖµ×ª»»ÎªpxÖµ
+     * ï¿½ï¿½spÖµ×ªï¿½ï¿½ÎªpxÖµ
      * @param context
      * @param spValue
      * @return
@@ -69,7 +80,7 @@ public class DisplayUtils {
     }
 
     /**
-     * ½«spÖµ×ª»»ÎªpxÖµ ,ÖØÔØ·½·¨
+     * ï¿½ï¿½spÖµ×ªï¿½ï¿½ÎªpxÖµ ,ï¿½ï¿½ï¿½Ø·ï¿½ï¿½ï¿½
      * @param context
      * @param spValue
      * @return
@@ -82,7 +93,7 @@ public class DisplayUtils {
     }
 
     /**
-     * »ñÈ¡ ÏÔÊ¾ĞÅÏ¢
+     * ï¿½ï¿½È¡ ï¿½ï¿½Ê¾ï¿½ï¿½Ï¢
      */
     public static DisplayMetrics getDisplayMetrics(Context context) {
         DisplayMetrics dm = context.getResources().getDisplayMetrics();
@@ -90,12 +101,12 @@ public class DisplayUtils {
     }
 
     /**
-     * ´òÓ¡ ÏÔÊ¾ĞÅÏ¢
+     * ï¿½ï¿½Ó¡ ï¿½ï¿½Ê¾ï¿½ï¿½Ï¢
      */
     public static DisplayMetrics printDisplayInfo(Context context) {
         DisplayMetrics dm = getDisplayMetrics(context);
             StringBuilder sb = new StringBuilder();
-            sb.append("_______  ÏÔÊ¾ĞÅÏ¢:  ");
+            sb.append("_______  ï¿½ï¿½Ê¾ï¿½ï¿½Ï¢:  ");
             sb.append("\ndensity         :").append(dm.density);
             sb.append("\ndensityDpi      :").append(dm.densityDpi);
             sb.append("\nheightPixels    :").append(dm.heightPixels);
@@ -107,10 +118,10 @@ public class DisplayUtils {
     }
 
     /**
-     * »ñÈ¡dialog¿í¶È
+     * ï¿½ï¿½È¡dialogï¿½ï¿½ï¿½
      *
      * @param activity Activity
-     * @return Dialog¿í¶È
+     * @return Dialogï¿½ï¿½ï¿½
      */
     public static int getDialogW(Activity activity) {
         DisplayMetrics dm = new DisplayMetrics();
@@ -121,10 +132,10 @@ public class DisplayUtils {
     }
 
     /**
-     * »ñÈ¡ÆÁÄ»¿í¶È
+     * ï¿½ï¿½È¡ï¿½ï¿½Ä»ï¿½ï¿½ï¿½
      *
      * @param activity Activity
-     * @return ÆÁÄ»¿í¶È
+     * @return ï¿½ï¿½Ä»ï¿½ï¿½ï¿½
      */
     public static int getScreenW(Activity activity) {
         DisplayMetrics dm = new DisplayMetrics();
@@ -135,10 +146,10 @@ public class DisplayUtils {
     }
 
     /**
-     * »ñÈ¡ÆÁÄ»¸ß¶È
+     * ï¿½ï¿½È¡ï¿½ï¿½Ä»ï¿½ß¶ï¿½
      *
      * @param activity Activity
-     * @return ÆÁÄ»¸ß¶È
+     * @return ï¿½ï¿½Ä»ï¿½ß¶ï¿½
      */
     public static int getScreenH(Activity activity) {
         DisplayMetrics dm = new DisplayMetrics();
@@ -152,7 +163,7 @@ public class DisplayUtils {
      * Toggle keyboard If the keyboard is visible,then hidden it,if it's
      * invisible,then show it
      *
-     * @param context ÉÏÏÂÎÄ
+     * @param context ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      */
     public static void toggleKeyboard(Context context) {
         InputMethodManager imm = (InputMethodManager) context

@@ -17,44 +17,44 @@ import java.io.InputStream;
 public class GoogleLocationUtils {
 
     /**
-     * ¸ù¾İµØÖ·»ñÈ¡¶ÔÓ¦µÄ¾­Î³¶È
+     * ???????????????Î³??
      *
-     * @param address µØÖ·ĞÅÏ¢
-     * @return ¾­Î³¶ÈÊı×é
+     * @param address ??????
+     * @return ??Î³??????
      */
     public static double[] getLocationInfo(String address) {
         if (TextUtils.isEmpty(address)) {
             return null;
         }
-        // ¶¨ÒåÒ»¸öHttpClient£¬ÓÃÓÚÏòÖ¸¶¨µØÖ··¢ËÍÇëÇó
+        // ???????HttpClient??????????????????????
         HttpClient client = new DefaultHttpClient();
-        // ÏòÖ¸¶¨µØÖ··¢ËÍGETÇëÇó
+        // ????????????GET????
         HttpGet httpGet = new HttpGet("http://maps.google."
                 + "com/maps/api/geocode/json?address=" + address
                 + "ka&sensor=false");
         StringBuilder sb = new StringBuilder();
         try {
-            // »ñÈ¡·şÎñÆ÷µÄÏìÓ¦
+            // ??????????????
             HttpResponse response = client.execute(httpGet);
             HttpEntity entity = response.getEntity();
-            // »ñÈ¡·şÎñÆ÷ÏìÓ¦µÄÊäÈëÁ÷
+            // ????????????????????
             InputStream stream = entity.getContent();
             int b;
-            // Ñ­»·¶ÁÈ¡·şÎñÆ÷ÏìÓ¦
+            // ???????????????
             while ((b = stream.read()) != -1) {
                 sb.append((char) b);
             }
-            // ½«·şÎñÆ÷·µ»ØµÄ×Ö·û´®×ª»»ÎªJSONObject¶ÔÏó
+            // ??????????????????????JSONObject????
             JSONObject jsonObject = new JSONObject(sb.toString());
-            // ´ÓJSONObject¶ÔÏóÖĞÈ¡³ö´ú±íÎ»ÖÃµÄlocationÊôĞÔ
+            // ??JSONObject?????????????Î»???location????
             JSONObject location = jsonObject.getJSONArray("results")
                     .getJSONObject(0).getJSONObject("geometry")
                     .getJSONObject("location");
-            // »ñÈ¡¾­¶ÈĞÅÏ¢
+            // ??????????
             double longitude = location.getDouble("lng");
-            // »ñÈ¡Î³¶ÈĞÅÏ¢
+            // ???Î³?????
             double latitude = location.getDouble("lat");
-            // ½«¾­¶È¡¢Î³¶ÈĞÅÏ¢×é³Édouble[]Êı×é
+            // ???????Î³????????double[]????
             return new double[]{longitude, latitude};
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,12 +63,12 @@ public class GoogleLocationUtils {
     }
 
     /**
-     * ¸ù¾İ¾­Î³¶È»ñÈ¡¶ÔÓ¦µÄµØÖ·
+     * ?????Î³???????????
      *
-     * @param longitude ¾­¶È
-     * @param latitude  Î³¶È
-     * @param lang      ÓïÑÔ Èç¹ûÎ»¿ÕÔòÄ¬ÈÏen
-     * @return µØÖ·ĞÅÏ¢
+     * @param longitude ????
+     * @param latitude  Î³??
+     * @param lang      ???? ???Î»???????en
+     * @return ??????
      * @throws Exception
      */
     public static String getAddress(double longitude, double latitude,
@@ -79,30 +79,30 @@ public class GoogleLocationUtils {
         if (lang == null) {
             lang = "en";
         }
-        // Éè¶¨ÇëÇóµÄ³¬Ê±Ê±¼ä
+        // ?è¶¨??????????
         HttpParams params = new BasicHttpParams();
         HttpConnectionParams.setConnectionTimeout(params, 10 * 1000);
         HttpConnectionParams.setSoTimeout(params, 10 * 1000);
-        // ¶¨ÒåÒ»¸öHttpClient£¬ÓÃÓÚÏòÖ¸¶¨µØÖ··¢ËÍÇëÇó
+        // ???????HttpClient??????????????????????
         HttpClient client = new DefaultHttpClient(params);
-        // ÏòÖ¸¶¨µØÖ··¢ËÍGETÇëÇó
+        // ????????????GET????
         HttpGet httpGet = new HttpGet("https://maps.googleapis.com/maps/api/"
                 + "geocode/json?latlng=" + latitude + "," + longitude
                 + "&sensor=false&language=" + lang);
         StringBuilder sb = new StringBuilder();
-        // Ö´ĞĞÇëÇó
+        // ???????
         HttpResponse response = client.execute(httpGet);
         HttpEntity entity = response.getEntity();
-        // »ñÈ¡·şÎñÆ÷ÏìÓ¦µÄ×Ö·û´®
+        // ???????????????????
         InputStream stream = entity.getContent();
         int b;
         while ((b = stream.read()) != -1) {
             sb.append((char) b);
         }
-        // °Ñ·şÎñÆ÷ÏàÓ¦µÄ×Ö·û´®×ª»»ÎªJSONObject
+        // ?????????????????????JSONObject
         JSONObject jsonObj = new JSONObject(sb.toString());
         Log.d("ConvertUtil", "getAddress:" + sb.toString());
-        // ½âÎö³öÏìÓ¦½á¹ûÖĞµÄµØÖ·Êı¾İ
+        // ?????????????Ğµ???????
         JSONObject addressObject = jsonObj.getJSONArray("results")
                 .getJSONObject(0);
         String address = decodeLocationName(addressObject);
@@ -110,11 +110,11 @@ public class GoogleLocationUtils {
     }
 
     /**
-     * ¸ù¾İGoogle API ½âÎö³ö¹ú¼ÒºÍ³ÇÊĞÃû³Æ
+     * ????Google API ??????????????????
      * https://developers.google.com/maps/documentation/geocoding
      *
-     * @param jsonObject µØÖ·Json¶ÔÏó
-     * @return ·µ»Ø¹ú¼ÒºÍ³ÇÊĞ
+     * @param jsonObject ???Json????
+     * @return ???????????
      */
     public static String decodeLocationName(JSONObject jsonObject) {
         JSONArray jsonArray;
